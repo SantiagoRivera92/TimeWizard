@@ -6,7 +6,7 @@ As of 2022/02/13, there are 777 different Time Wizard formats. Every F&L and set
 
 ## I just want a banlist to use on EDOPRO
 
-Open the lflist folder, locate the list you want (they are sorted chronologically), open it, right click on "Raw", and save it to your computer as you would save an image. Then just place it on your /repositories/lflist folder in whatever folder you installed EDOPRO in.
+Open the lflist folder, locate the list you want (they are sorted chronologically, and there's a 99% chance the one you want is in the curated folder), open it, right click on "Raw", and save it to your computer as you would save an image. Then just place it on your /repositories/lflist folder in whatever folder you installed EDOPRO in.
 
 ## I want to learn how to run the script
 
