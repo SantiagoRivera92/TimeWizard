@@ -1,0 +1,40 @@
+{
+    "forbidden": [],
+    "limited": [
+        "Left Arm of the Forbidden One",
+        "Left Leg of the Forbidden One",
+        "Right Arm of the Forbidden One",
+        "Right Leg of the Forbidden One",
+        "Cyber Jar",
+        "Exodia the Forbidden One",
+        "Jinzo",
+        "Morphing Jar",
+        "Witch of the Black Forest",
+        "Card Destruction",
+        "Change of Heart",
+        "Confiscation",
+        "Dark Hole",
+        "Delinquent Duo",
+        "Limiter Removal",
+        "Monster Reborn",
+        "Painful Choice",
+        "Pot of Greed",
+        "Premature Burial",
+        "Raigeki",
+        "Snatch Steal",
+        "Swords of Revealing Light",
+        "The Forceful Sentry",
+        "Upstart Goblin",
+        "Call of the Haunted",
+        "Ceasefire",
+        "Imperial Order",
+        "Mirror Force"
+    ],
+    "semilimited": [
+        "Morphing Jar #2",
+        "Sangan",
+        "Heavy Storm",
+        "Nobleman of Crossout",
+        "Backup Soldier"
+    ]
+}
