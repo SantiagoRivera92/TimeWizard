@@ -22,15 +22,56 @@ cachedSets = []
 cachedCards = []
 
 #Dates and names of formats
-definedFormats = [
+popularFormats = [
+	{"name":"Yugi-Kaiba", "date":"2002-05-15"},
+	{"name":"Critter", "date":"2002-08-08"},
+	{"name":"Android", "date":"2003-05-17"},
+	{"name":"Yata", "date":"2003-08-10"},
+	{"name":"Vampire", "date":"2004-02-28"},
+	{"name":"Chaos", "date":"2004-06-26"},
+	{"name":"Warrior", "date":"2005-02-13"},
 	{"name":"Goat", "date":"2005-07-27"},
+	{"name":"Cyber", "date":"2005-09-10"},
 	{"name":"Reaper","date":"2006-03-15"},
+	{"name":"Chaos Return", "date":"2006-08-12"},
+	{"name":"Stein", "date":"2006-12-09"},
+	{"name":"Troop Dupe Scoop", "date":"2007-08-18"},
+	{"name":"Perfect Circle", "date":"2008-01-26"},
+	{"name":"DAD Return", "date":"2008-04-12"},
+	{"name":"Gladiator", "date":"2008-07-26"},
+	{"name":"TeleDAD", "date":"2009-01-17"},
+	{"name":"Synchro Cat", "date":"2009-08-15"},
+	{"name":"Lightsworn", "date":"2010-02-27"},
 	{"name":"Edison", "date":"2010-04-24"},
+	{"name":"Frog", "date":"2010-08-07"},
+	{"name":"Six Samurai", "date":"2011-02-12"},
+	{"name":"Providence", "date":"2011-06-19"},
 	{"name":"Tengu Plant", "date":"2011-08-16"},
+	{"name":"Long Beach", "date":"2012-03-26"},
+	{"name":"Dino Rabbit", "date":"2012-06-28"},
+	{"name":"Wind-Up", "date":"2012-10-25"},
 	{"name":"Abyss Rising", "date":"2012-11-09"},
+	{"name":"Meadowlands", "date":"2013-05-12"},
+	{"name":"Baby Rulers", "date":"2013-07-12"},
 	{"name":"Ravine Rulers", "date":"2013-11-08"},
 	{"name":"Soul Fire", "date":"2014-04-25"},
-	{"name":"HAT", "date":"2014-05-16"}
+	{"name":"HAT", "date":"2014-07-11"},
+	{"name":"Shaddoll", "date":"2014-09-07"},
+	{"name":"Burning Abyss", "date":"2014-12-13"},
+	{"name":"Nekroz", "date":"2015-06-27"},
+	{"name":"Clown", "date":"2015-10-03"},
+	{"name":"PePe", "date":"2016-02-06"},
+	{"name":"Dracopal", "date":"2016-04-09"},
+	{"name":"Monarch", "date":"2016-07-10"},
+	{"name":"ABC", "date":"2017-01-15"},
+	{"name":"Grass Zoo", "date":"2017-04-08"},
+	{"name":"Draco Zoo", "date":"2017-07-08"},
+	{"name":"Link Zoo", "date":"2017-08-26"},
+	{"name":"Gouki", "date":"2018-06-30"},
+	{"name":"Danger", "date":"2018-11-17"},
+	{"name":"Eternal", "date":"2020-01-15"},
+	{"name":"Secret Slayers", "date":"2020-08-22"},
+	{"name":"Infernoble", "date":"2020-11-21"}
 ]
 
 def dateFromString(dateAsString):
@@ -200,13 +241,17 @@ def getCardList(setList, banlistFile):
 				cardList.append(simpleCard)
 	return cardList
 
-def printCards(cardList, date, name):
+def printCards(cardList, date, name, curated):
 	if len(name)>0:
 		filename = "%04d-%02d-%02d (%s).lflist.conf"%(date.year, date.month, date.day, name)
 	else:
 		filename = getDateAsString(date)
 		if len(filename) == 0:
 			filename = "%04d-%02d-%02d.lflist.conf"%(date.year, date.month, date.day)
+	if curated:
+		filename = "curated/%s"%(filename)
+	else:
+		filename = "all lists/%s"%(filename)
 	with open("lflist/%s"%filename, 'w', encoding="utf-8") as outfile:		
 		if len(name) > 0:
 			outfile.write("#[%s format]\n"%name)
@@ -222,27 +267,23 @@ def printCards(cardList, date, name):
 		for card in cardList:
 			outfile.write("%d %d-- %s\n" % (card.get('id'), card.get('status'), card.get('name')))
 	
-def generateBanlist(date, name):
-	try:
-		if name != "F&L":
-			print("Generating %s banlist"%(name))
-		else:
-			print("Generating %s Forbidden and Limited List update banlist"%(getDateAsString(date)))
-		sys.stdout.flush()
-		banlistFile = findBanlist(date)
-		setList = getSetList(date)
-		cardList = getCardList(setList, banlistFile)
-		printCards(cardList, date, name)
-		return False
-	except:
-		return True
+def generateBanlist(date, name, curated):
+	if name != "F&L":
+		print("Generating %s banlist"%(name))
+	else:
+		print("Generating %s Forbidden and Limited List update banlist"%(getDateAsString(date)))
+	sys.stdout.flush()
+	banlistFile = findBanlist(date)
+	setList = getSetList(date)
+	cardList = getCardList(setList, banlistFile)
+	printCards(cardList, date, name, curated)
 
 def generateBanlistFromArgs(args):
 	date = validateDate()
 	name = ""
 	if len(args) == 3:
 		name = args[2]
-	generateBanlist(date, name)
+	generateBanlist(date, name, False)
 
 def validateArgs():
 	args = sys.argv
@@ -315,8 +356,29 @@ def generateAllLists():
 			if (setCode in ignoredSets):
 				discardFormat = True
 			else:
-				if ("Sneak Peek" in date.get('name')):
-					name = "%s Sneak Peek"%(date.get('set'))
+				if "Sneak Peek" in setName:
+					if setCode == "SP1":
+						if "The Lost Millennium" in setName:
+							name = "TLM Sneak Peek"
+						elif "Cybernetic Revolution" in setName:
+							name = "CRV Sneak Peek"
+						elif "Elemental Energy" in setName:
+							name = "EEN Sneak Peek"
+						elif "Flaming Eternity" in setName:
+							name = "FET Sneak Peek"
+						else:
+							name = ""
+					elif (setCode == "SP2"):
+						if "Shadow of Infinity" in setName:
+							name = "SOI Sneak Peek"
+						elif "Enemy of Justice" in setName:
+							name = "EOV Sneak Peek"
+						else:
+							name = ""
+					else:
+						name = "%s Sneak Peek"%(date.get('set'))
+				elif ("Premiere!" in date.get('name')):
+					name = "%s Premiere"%(date.get('set'))
 				elif("Special Edition" in date.get('name')):
 					name = "%s Special Edition"%(date.get('set'))
 				else:
@@ -326,22 +388,15 @@ def generateAllLists():
 		if not discardFormat:
 			retry = True
 			while retry:
-				retry = generateBanlist(dateFromString(date.get('date')), name)
+				retry = generateBanlist(dateFromString(date.get('date')), name, False)
 
 def getDateAsString(date):
 	return "%04d-%02d-%02.d"%(date.year, date.month, date.day)
 
-def getNameForBanlist(date):
-	dateAsString = getDateAsString(date)
-	for ygoformat in definedFormats:
-		if dateAsString == ygoformat.get("date"):
-			return ygoformat.get("name")
-	return ""
-
 def generatePopularLists():
-	for ygoformat in definedFormats:
+	for ygoformat in popularFormats:
 		formatName = ygoformat.get("name")
 		formatDate = ygoformat.get("date")
-		generateBanlist(formatDate, formatName)
+		generateBanlist(dateFromString(formatDate), formatName, True)
 
 validateArgs()
