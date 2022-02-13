@@ -16,7 +16,11 @@ The only accepted format for dates is YYYY-MM-DD. This makes it so sorting the f
 
 > python makeBanlist.py all
 
-This will generate every single banlist to the lflist folder. You probably don't want to use this one since it will take several hours to generate them, but I did it just so they were available to grab from the repo.
+This will generate every single banlist to the lflist folder.
+
+> python makeBanlist.py popular
+
+This will generate all the popular retro formats.
 
 > python makeBanlist.py test
 
