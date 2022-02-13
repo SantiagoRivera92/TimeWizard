@@ -1,14 +1,14 @@
-#EDOPRO F&L list generator
+# EDOPRO F&L list generator
 
 This project is just a script that generates every single Time Wizard EDOPRO lflist possible.
 
 As of 2022/02/13, there are 777 different Time Wizard formats. Every F&L and set release counts as a different format.
 
-##I just want a banlist to use on EDOPRO
+## I just want a banlist to use on EDOPRO
 
 Open the lflist folder, locate the list you want (they are sorted chronologically), open it, right click on "Raw", and save it to your computer as you would save an image. Then just place it on your /repositories/lflist folder in whatever folder you installed EDOPRO in.
 
-##I want to learn how to run the script
+## I want to learn how to run the script
 
 You need to have Python installed in order to run the script. Once you've done that, there are a number of different things the script can do depending on what parameters you pass.
 
