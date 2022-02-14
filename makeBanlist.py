@@ -245,7 +245,7 @@ def printCards(cardList, date, name, curated):
 	if len(name)>0:
 		filename = "%04d-%02d-%02d (%s).lflist.conf"%(date.year, date.month, date.day, name)
 	else:
-		filename = getDateAsString(date)
+		filename = "%s.lflist.conf"%getDateAsString(date)
 		if len(filename) == 0:
 			filename = "%04d-%02d-%02d.lflist.conf"%(date.year, date.month, date.day)
 	if curated:
