@@ -80,7 +80,7 @@ def dateFromString(dateAsString):
 	day = int(dateAsString[8:10])
 	return datetime.datetime(year, month, day)
 
-def validateDate():
+def validateDate(args):
 	year = args[1][0:4]
 	month = args[1][5:7]
 	day = args[1][8:10]
@@ -279,7 +279,7 @@ def generateBanlist(date, name, curated):
 	printCards(cardList, date, name, curated)
 
 def generateBanlistFromArgs(args):
-	date = validateDate()
+	date = validateDate(args)
 	name = ""
 	if len(args) == 3:
 		name = args[2]
