@@ -12,6 +12,8 @@ You need to have Python installed in order to run the script. Once you've done t
 
 The only accepted format for dates is YYYY-MM-DD. This makes it so sorting the filenames also sorts the dates chronologically. If you have an issue with using YYYY-MM-DD like a grown-up, kindly shut up about it.
 
+If you're trying to run the script on Windows, you need to type "py" instead of "python" in CMD (unless you're using a clone of Bash as your console, in which case you have run a python script before and you don't need me to explain)
+
 > python makeBanlist.py all
 
 This will generate every single banlist to the lflist folder.
