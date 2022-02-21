@@ -159,11 +159,16 @@ def getSetList(date):
 def findBanlist(date):
 	filenames = getBanlistFileNames()
 	lastbanlist = "2002-03-01.json"
+	
 	for filename in filenames:
 		banlistDate = dateFromString(filename)
-		if (banlistDate < date):
-			lastbanlist = filename
+		lastbanlist = filename
+		if (banlistDate >= date):
+			break
 
+	if(banlistDate != date):
+		print("Couldn't find banlist! Check that it is available in the /banlists folder!")
+		sys.exit()
 	return lastbanlist
 
 def getBanlistFileNames():
@@ -299,7 +304,7 @@ def validateArgs():
 			generatePopularLists()
 			sys.exit()
 		elif len(args[1]) != 10:
-			print("This script requires 1 date argument with format YYYY-MM-DD to run")
+			print("This script requires 2 arguments with format YYYY-MM-DD \"F&L\" to run")
 			sys.exit()
 		elif args[1][4:5] != "-" or args[1][7:8] != "-":
 			print("Use - as the separator for the date")
@@ -316,7 +321,7 @@ def validateArgs():
 		print("This creates a Goat Format banlist that is named Goat Format.conf.lflist")
 		sys.exit()
 	elif length < 2:
-		print("This script requires 1 date argument with format YYYY-MM-DD to run")
+		print("This script requires 2 argument with format YYYY-MM-DD \"F&L\" to run")
 		sys.exit()
 
 def generateAllLists():
