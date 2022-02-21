@@ -321,7 +321,7 @@ def validateArgs():
 		print("This creates a Goat Format banlist that is named Goat Format.conf.lflist")
 		sys.exit()
 	elif length < 2:
-		print("This script requires 2 argument with format YYYY-MM-DD \"F&L\" to run")
+		print("This script requires 2 arguments with format YYYY-MM-DD \"F&L\" to run")
 		sys.exit()
 
 def generateAllLists():
