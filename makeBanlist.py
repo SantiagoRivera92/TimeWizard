@@ -279,7 +279,7 @@ def generateBanlist(date, name, curated):
 		print("Generating %s Forbidden and Limited List update banlist"%(getDateAsString(date)))
 	sys.stdout.flush()
 	banlistFile = findBanlist(date)
-	setList = getSetList(date)
+	setList = getSetList( findNextSet(date) )
 	cardList = getCardList(setList, banlistFile)
 	printCards(cardList, date, name, curated)
 
@@ -304,7 +304,7 @@ def validateArgs():
 			generatePopularLists()
 			sys.exit()
 		elif len(args[1]) != 10:
-			print("This script requires 2 arguments with format YYYY-MM-DD \"F&L\" to run")
+			print("This script requires 1 date argument with format YYYY-MM-DD to run")
 			sys.exit()
 		elif args[1][4:5] != "-" or args[1][7:8] != "-":
 			print("Use - as the separator for the date")
@@ -321,7 +321,7 @@ def validateArgs():
 		print("This creates a Goat Format banlist that is named Goat Format.conf.lflist")
 		sys.exit()
 	elif length < 2:
-		print("This script requires 2 arguments with format YYYY-MM-DD \"F&L\" to run")
+		print("This script requires 1 date argument with format YYYY-MM-DD to run")
 		sys.exit()
 
 def generateAllLists():
@@ -403,5 +403,20 @@ def generatePopularLists():
 		formatName = ygoformat.get("name")
 		formatDate = ygoformat.get("date")
 		generateBanlist(dateFromString(formatDate), formatName, True)
+
+def findNextSet(date):
+	filenames = getBanlistFileNames()
+	nextDate = date
+	#Run through our filenames and find the next available banlist
+	for filename in filenames:
+		if ( dateFromString(filename) > date):
+			nextDate = dateFromString(filename)
+			break
+	#If our date has stayed the same from start to end, we are using the lastest list.
+	#If our list is in the future, then just set it to today.
+	if (nextDate == date or nextDate > date.today()):
+		nextDate = date.today()
+	print(F"Calculated next date to be {nextDate}")
+	return nextDate
 
 validateArgs()
