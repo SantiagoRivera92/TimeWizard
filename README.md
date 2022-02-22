@@ -34,4 +34,7 @@ This will create the banlist for whatever date you put in the arguments. 2005-07
 
 This will create the banlist for whatever date you put in the arguments and add the name to the filename. The filename in this case will be 2005-07-27 (Goat).lflist.conf
 
-### Special thanks to [Larikk](https://github.com/Larikk) for telling me over 15 errors I had in my banlists. Absolute GOAT.
+## Shoutouts
+
+[Larikk](https://github.com/Larikk) for fixing a lot of my banlists.
+[HunterKing](https://github.com/HunterKing) for fixing a couple of bugs regarding how I was using dates.
