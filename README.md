@@ -37,4 +37,5 @@ This will create the banlist for whatever date you put in the arguments and add 
 ## Shoutouts
 
 [Larikk](https://github.com/Larikk) for fixing a lot of my banlists.
+
 [HunterKing](https://github.com/HunterKing) for fixing a couple of bugs regarding how I was using dates.
