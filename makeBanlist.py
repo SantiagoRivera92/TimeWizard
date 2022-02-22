@@ -159,11 +159,16 @@ def getSetList(date):
 def findBanlist(date):
 	filenames = getBanlistFileNames()
 	lastbanlist = "2002-03-01.json"
+	
 	for filename in filenames:
 		banlistDate = dateFromString(filename)
-		if (banlistDate < date):
-			lastbanlist = filename
+		lastbanlist = filename
+		if (banlistDate >= date):
+			break
 
+	if(banlistDate != date):
+		print("Couldn't find banlist! Check that it is available in the /banlists folder!")
+		sys.exit()
 	return lastbanlist
 
 def getBanlistFileNames():
@@ -274,7 +279,7 @@ def generateBanlist(date, name, curated):
 		print("Generating %s Forbidden and Limited List update banlist"%(getDateAsString(date)))
 	sys.stdout.flush()
 	banlistFile = findBanlist(date)
-	setList = getSetList(date)
+	setList = getSetList( findNextSet(date) )
 	cardList = getCardList(setList, banlistFile)
 	printCards(cardList, date, name, curated)
 
@@ -398,5 +403,20 @@ def generatePopularLists():
 		formatName = ygoformat.get("name")
 		formatDate = ygoformat.get("date")
 		generateBanlist(dateFromString(formatDate), formatName, True)
+
+def findNextSet(date):
+	filenames = getBanlistFileNames()
+	nextDate = date
+	#Run through our filenames and find the next available banlist
+	for filename in filenames:
+		if ( dateFromString(filename) > date):
+			nextDate = dateFromString(filename)
+			break
+	#If our date has stayed the same from start to end, we are using the lastest list.
+	#If our list is in the future, then just set it to today.
+	if (nextDate == date or nextDate > date.today()):
+		nextDate = date.today()
+	print(F"Calculated next date to be {nextDate}")
+	return nextDate
 
 validateArgs()
