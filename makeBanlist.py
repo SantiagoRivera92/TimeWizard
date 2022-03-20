@@ -45,6 +45,7 @@ popularFormats = [
 	{"name":"Edison", "date":"2010-04-24"},
 	{"name":"Frog", "date":"2010-08-07"},
 	{"name":"Six Samurai", "date":"2011-02-12"},
+	{"name":"Extreme Victory", "date":"2011-05-10"},
 	{"name":"Providence", "date":"2011-06-19"},
 	{"name":"Tengu Plant", "date":"2011-08-16"},
 	{"name":"Long Beach", "date":"2012-03-26"},
@@ -162,13 +163,11 @@ def findBanlist(date):
 	
 	for filename in filenames:
 		banlistDate = dateFromString(filename)
-		lastbanlist = filename
 		if (banlistDate >= date):
 			break
+		else:
+			lastbanlist = filename
 
-	if(banlistDate != date):
-		print("Couldn't find banlist! Check that it is available in the /banlists folder!")
-		sys.exit()
 	return lastbanlist
 
 def getBanlistFileNames():
@@ -279,7 +278,7 @@ def generateBanlist(date, name, curated):
 		print("Generating %s Forbidden and Limited List update banlist"%(getDateAsString(date)))
 	sys.stdout.flush()
 	banlistFile = findBanlist(date)
-	setList = getSetList( findNextSet(date) )
+	setList = getSetList(date)
 	cardList = getCardList(setList, banlistFile)
 	printCards(cardList, date, name, curated)
 
@@ -403,20 +402,5 @@ def generatePopularLists():
 		formatName = ygoformat.get("name")
 		formatDate = ygoformat.get("date")
 		generateBanlist(dateFromString(formatDate), formatName, True)
-
-def findNextSet(date):
-	filenames = getBanlistFileNames()
-	nextDate = date
-	#Run through our filenames and find the next available banlist
-	for filename in filenames:
-		if ( dateFromString(filename) > date):
-			nextDate = dateFromString(filename)
-			break
-	#If our date has stayed the same from start to end, we are using the lastest list.
-	#If our list is in the future, then just set it to today.
-	if (nextDate == date or nextDate > date.today()):
-		nextDate = date.today()
-	print(F"Calculated next date to be {nextDate}")
-	return nextDate
 
 validateArgs()
