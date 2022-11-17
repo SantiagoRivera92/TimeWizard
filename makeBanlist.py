@@ -1,4 +1,4 @@
-import urllib.request, json, sys, datetime
+import urllib.request, json, sys, datetime, operator
 from os import walk
 header= {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) ' 
 			'AppleWebKit/537.11 (KHTML, like Gecko) '
@@ -266,6 +266,8 @@ def printCards(cardList, date, name, curated):
 			filename = "%04d-%02d-%02d.lflist.conf"%(date.year, date.month, date.day)
 	if curated:
 		filename = "curated/%s"%(filename)
+	elif name == "Advanced":
+		filename = "Advanced.lflist.conf"
 	else:
 		filename = "all lists/%s"%(filename)
 	with open("lflist/%s"%filename, 'w', encoding="utf-8") as outfile:		
@@ -295,6 +297,13 @@ def generateBanlist(date, name, curated):
 	setList = getSetList(date)
 	cardList = getCardList(setList, banlistFile)
 	printCards(cardList, date, name, curated)
+
+def generateAdvancedBanlist(date):
+	print("Generating Advanced banlist", flush=True)
+	banlistFile = findBanlist(date)
+	setList = getFullSetList(date)
+	cardList = getCardList(setList, banlistFile)
+	printCards(cardList, date, "Advanced", curated)
 
 def generateBanlistFromArgs(args):
 	date = validateDate(args)
@@ -367,6 +376,10 @@ def generateAllLists():
 					banlistDate['name'] = cardSet.get('set_name')
 					dates.append(banlistDate)
 					shortDates.append(date)
+	dates.sort(key=operator.itemgetter('date'), reverse=True)
+
+	mostRecent = dates[0]
+	generateBanlist(dateFromString(mostRecent.get('date')), "Advanced", False)
 
 	for date in dates:
 		name = ""
