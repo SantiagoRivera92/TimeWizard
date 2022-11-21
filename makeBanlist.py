@@ -284,7 +284,8 @@ def printCards(cardList, date, name, curated):
 		outfile.write("\n")
 		for card in cardList:
 			for cardId in card['id']:
-				outfile.write("%d %d-- %s\n" % (cardId, card.get('status'), card.get('name')))
+				line = "%d %d-- %s\n" % (cardId, card.get('status'), card.get('name'))
+				outfile.write(line)
 			
 	
 def generateBanlist(date, name, curated):
@@ -321,6 +322,7 @@ def validateArgs():
 			sys.exit()
 		elif args[1] == "all":
 			generateAllLists()
+			generatePopularLists()
 			sys.exit()
 		elif args[1] == "popular":
 			generatePopularLists()
