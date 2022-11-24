@@ -160,10 +160,9 @@ def getSetList(date):
 def findBanlist(date):
 	filenames = getBanlistFileNames()
 	lastbanlist = "2002-03-01.json"
-	
 	for filename in filenames:
 		banlistDate = dateFromString(filename)
-		if (banlistDate >= date):
+		if (banlistDate > date):
 			break
 		else:
 			lastbanlist = filename
