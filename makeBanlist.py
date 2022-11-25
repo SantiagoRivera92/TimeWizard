@@ -133,7 +133,6 @@ def getSetList(date):
 	for tcgSet in sets:
 		try:
 			setReleaseDateAsString = tcgSet['tcg_date']
-
 			releaseYear = int(setReleaseDateAsString[0:4])
 			releaseMonth = int(setReleaseDateAsString[5:7])
 			releaseDay = int(setReleaseDateAsString[8:10])
@@ -366,6 +365,8 @@ def generateAllLists():
 
 	sets = getFullSetList()
 	for cardSet in sets:
+		if cardSet['set_code'] == "BLCR":
+			cardSet['tcg_date'] = "2022-11-18"
 		date = cardSet.get('tcg_date')
 		if date != None:
 			if dateFromString(date) >= firstDate:
