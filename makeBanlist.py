@@ -271,7 +271,7 @@ def getCardList(setList, banlistFile):
 				cardList.append(simpleCard)
 	return cardList
 
-def printCards(cardList, date, name, curated):
+def printCards(cardList, date, name, curated, force):
 	if len(name)>0:
 		filename = "%04d-%02d-%02d (%s).lflist.conf"%(date.year, date.month, date.day, name)
 	else:
@@ -284,25 +284,29 @@ def printCards(cardList, date, name, curated):
 		filename = "Advanced.lflist.conf"
 	else:
 		filename = "all lists/%s"%(filename)
-	with open("lflist/%s"%filename, 'w', encoding="utf-8") as outfile:		
-		if len(name) > 0:
-			outfile.write("#[%s format]\n"%name)
-			outfile.write("!%s (%04d.%02d.%02d)\n"%(name, date.year, date.month, date.day))
-		else:
-			outfile.write("#[%04d.%02d.%02d]\n"%(date.year, date.month, date.day))
-			outfile.write("!%04d.%02d.%02d\n"%(date.year, date.month, date.day))
-		outfile.write("$whitelist\n")
-		outfile.write(animeshit)
-		outfile.write("\n")
-		outfile.write(rushduelshit)
-		outfile.write("\n")
-		for card in cardList:
-			for cardId in card['id']:
-				line = "%d %d-- %s\n" % (cardId, card.get('status'), card.get('name'))
-				outfile.write(line)
+
+	if (not os.path.exists("lflist/%s"%filename)) or force:
+		with open("lflist/%s"%filename, 'w', encoding="utf-8") as outfile:		
+			if len(name) > 0:
+				outfile.write("#[%s format]\n"%name)
+				outfile.write("!%s (%04d.%02d.%02d)\n"%(name, date.year, date.month, date.day))
+			else:
+				outfile.write("#[%04d.%02d.%02d]\n"%(date.year, date.month, date.day))
+				outfile.write("!%04d.%02d.%02d\n"%(date.year, date.month, date.day))
+			outfile.write("$whitelist\n")
+			outfile.write(animeshit)
+			outfile.write("\n")
+			outfile.write(rushduelshit)
+			outfile.write("\n")
+			for card in cardList:
+				for cardId in card['id']:
+					line = "%d %d-- %s\n" % (cardId, card.get('status'), card.get('name'))
+					outfile.write(line)
+	else:
+		print("Skipped")
 			
 	
-def generateBanlist(date, name, curated):
+def generateBanlist(date, name, curated, force):
 	if name != "F&L":
 		print("Generating %s banlist"%(name))
 	else:
@@ -311,21 +315,21 @@ def generateBanlist(date, name, curated):
 	banlistFile = findBanlist(date)
 	setList = getSetList(date)
 	cardList = getCardList(setList, banlistFile)
-	printCards(cardList, date, name, curated)
+	printCards(cardList, date, name, curated, force)
 
 def generateAdvancedBanlist(date):
 	print("Generating Advanced banlist", flush=True)
 	banlistFile = findBanlist(date)
 	setList = getFullSetList(date)
 	cardList = getCardList(setList, banlistFile)
-	printCards(cardList, date, "Advanced", curated)
+	printCards(cardList, date, "Advanced", curated, True)
 
 def generateBanlistFromArgs(args):
 	date = validateDate(args)
 	name = ""
 	if len(args) == 3:
 		name = args[2]
-	generateBanlist(date, name, False)
+	generateBanlist(date, name, False, True)
 
 def validateArgs():
 	args = sys.argv
@@ -399,7 +403,7 @@ def generateAllLists():
 		dates.sort(key=operator.itemgetter('date'), reverse=True)
 
 		mostRecent = dates[0]
-		generateBanlist(dateFromString(mostRecent.get('date')), "Advanced", False)
+		generateBanlist(dateFromString(mostRecent.get('date')), "Advanced", False, True)
 
 
 		goodDates = []
@@ -436,7 +440,7 @@ def generateAllLists():
 
 			retry = True
 			while retry:
-				retry = generateBanlist(dateFromString(date.get('date')), name, False)
+				retry = generateBanlist(dateFromString(date.get('date')), name, False, False)
 			print("%d / %d, %f%% done"%(i, count, i*100/count), flush=True)
 
 	print("Calculating duplicates...", flush=True)
