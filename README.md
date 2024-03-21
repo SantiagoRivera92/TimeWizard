@@ -12,6 +12,12 @@ You need to have Python installed in order to run the script.
 
 Open a terminal on the folder containing the script, then run ``python timewizard.py``. Once the script is done, you'll have every banlist.
 
+## I want to add a Time Wizard format to the curated list
+
+Hit me up on Discord (diamonddudeygo) and I'll be happy to include the format you're trying to play to the curated list.
+
+If you just want to generate it yourself, the curated lists are on ``static/popular_formats``. Just add an item to the list and run the script. 
+
 ## Shoutouts
 
 [Larikk](https://github.com/Larikk) for fixing a lot of my banlists.
