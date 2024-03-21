@@ -1,30 +1,30 @@
 {
-    "forbidden": [],
-    "limited": [
-        "Left Arm of the Forbidden One",
-        "Left Leg of the Forbidden One",
-        "Right Arm of the Forbidden One",
-        "Right Leg of the Forbidden One",
-        "Cyber Jar",
-        "Exodia the Forbidden One",
-        "Change of Heart",
-        "Confiscation",
-        "Dark Hole",
-        "Delinquent Duo",
-        "Monster Reborn",
-        "Painful Choice",
-        "Pot of Greed",
-        "Raigeki",
-        "Snatch Steal",
-        "The Forceful Sentry",
-        "Upstart Goblin",
-        "Mirror Force"
-    ],
-    "semilimited": [
-        "Sangan",
-        "Witch of the Black Forest",
-        "Card Destruction",
-        "Heavy Storm",
-        "Swords of Revealing Light"
-    ]
+	"forbidden": [],
+	"limited": [
+		"Left Arm of the Forbidden One",
+		"Left Leg of the Forbidden One",
+		"Right Arm of the Forbidden One",
+		"Right Leg of the Forbidden One",
+		"Cyber Jar",
+		"Exodia the Forbidden One",
+		"Change of Heart",
+		"Confiscation",
+		"Dark Hole",
+		"Delinquent Duo",
+		"Monster Reborn",
+		"Painful Choice",
+		"Pot of Greed",
+		"Raigeki",
+		"Snatch Steal",
+		"The Forceful Sentry",
+		"Upstart Goblin",
+		"Mirror Force"
+	],
+	"semilimited": [
+		"Sangan",
+		"Witch of the Black Forest",
+		"Card Destruction",
+		"Heavy Storm",
+		"Swords of Revealing Light"
+	]
 }
