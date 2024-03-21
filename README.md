@@ -8,7 +8,7 @@ Open the lflist folder, locate the list you want (they are sorted chronologicall
 
 ## I want to learn how to run the script
 
-You need to have Python installed in order to run the script. Once you've done that, there are a number of different things the script can do depending on what parameters you pass.
+You need to have Python installed in order to run the script.
 
 Open a terminal on the folder containing the script, then run ``python timewizard.py``. Once the script is done, you'll have every banlist.
 
