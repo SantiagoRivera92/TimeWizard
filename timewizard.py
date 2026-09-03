@@ -46,16 +46,21 @@ def get_full_set_list():
         sets_request = urllib.request.Request(sets_url, None, header)
         with urllib.request.urlopen(sets_request) as url:
             cached_sets = json.loads(url.read().decode())
-            cached_sets = [set_item for set_item in cached_sets if set_item.get('tcg_date') != "0000-00-00"]
+            cached_sets = [
+    set_item for set_item in cached_sets
+    if set_item.get('tcg_date') not in (None, "0000-00-00")
+]
     return cached_sets
 
 def get_set_list(date):
     sets = get_full_set_list()
     legal_sets = [
         tcg_set['set_name'] for tcg_set in sets
-        if tcg_set.get('tcg_date') != "0000-00-00" and date_from_string(tcg_set['tcg_date']) <= date
+        if tcg_set.get('tcg_date') not in (None, "0000-00-00")
+        and date_from_string(tcg_set['tcg_date']) <= date
         and tcg_set['set_code'] not in ignored_dates
     ]
+
     return list(dict.fromkeys(legal_sets))
 
 def find_banlist(date):
@@ -190,11 +195,11 @@ def generate_all_lists():
             (date_from_string(card_set.get('tcg_date')),
             card_set.get('set_code') + " Special Edition" if "Special Edition" in card_set.get('set_name') else card_set.get('set_code'))
             for card_set in get_full_set_list()
-            if card_set.get('tcg_date') != "0000-00-00" and
+            if card_set.get('tcg_date') not in (None, "0000-00-00") and
             date_from_string(card_set.get('tcg_date')) >= datetime.datetime(2002, 3, 8) and
             card_set.get('tcg_date') not in ignored_dates and card_set.get('set_code') not in ignored_sets
             and not "Premiere!" in card_set.get('set_name') and not "Sneak Peek" in card_set.get('set_name')
-        }   
+        }
 
         good_dates = sorted((banlist_dates | release_dates), reverse=True)
         
